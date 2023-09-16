@@ -1,22 +1,20 @@
 class BooksController < ApplicationController
 
-  def new
-    　@book = Book.new
-     #@BookにBook.newの情報入れる
-  end
-
   def create
     @book = Book.new(book_params)
-    if book.save
-      redirect_to '/books/:id'
+    #データをフィルターにかける為、book_params必要
+    if @book.save
+      redirect_to book_path(@book.id)
+      # book_path=URLのPrefix、@book.id=id番号をbook_pathのURL(:id)に代入できるようにする？
     else
       render :new
     end
-    
   end
 
   def index
     @books = Book.all
+    @book = Book.new
+    # 新規投稿のデータを入れる箱もindex内に用意する
   end
 
   def show
@@ -30,6 +28,7 @@ class BooksController < ApplicationController
   def update
     book = Book.find(params[:id])
     book.update(book_params)
+    #更新データもフィルターかける為、book_params必要
     redirect_to books_path(book.id)  
   end
   
