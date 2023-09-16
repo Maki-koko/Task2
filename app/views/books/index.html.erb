@@ -1,3 +1,5 @@
+<%= flash[:notice] %>
+
 <h1>Books</h1>
 
  <table>
@@ -23,18 +25,24 @@
     <p>Please check the error details.</p>
     <ul>
       <% @book.errors.full_messages.each do |error| %>
-      <li><%= error %></li>
+      <li>
+        <%= error %>
+      </li>
       <%end%>
     </ul>
   <%end%>
 
 <div class="New-post">
-  <h2>New book</h2>
+  <h2 >New book</h2>
   <%= form_with model: @book do |new| %>
-    <p>Title</p>
+  
+    <p class="text">Title</p>
     <%= new.text_field :title %>
-    <p>Body</p>
+    
+    <p class="text">Body</p>
     <%= new.text_field :body %>
+    
     <%= new.submit "Create Book"%>
+    
   <%end%>
 </div>
