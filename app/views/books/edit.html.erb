@@ -1,12 +1,23 @@
+<%= flash[:notice] %>
+
 <h1>Editing Book</h1>
 <p>Find me in app/views/books/edit.html.erb</p>
 
-  <%= form_with model: @book do |f| %>
+  <% if @book.errors.any? %>
+    <p>Please check the error details.</p>
+    <ul>
+      <% @book.errors.full_messages.each do |error| %>
+      <li><%= error %></li>
+      <%end%>
+    </ul>
+  <%end%>
+
+  <%= form_with model: @book do |rewrite| %>
     <p>Title</p>
-    <%= f.text_field :title %>
+    <%= rewrite.text_field :title %>
     <p>Body</p>
-    <%= f.text_field :body %>
-    <%= f.submit :"Update Book"%>
+    <%= rewrite.text_field :body %>
+    <%= rewrite.submit :"Update Book"%>
   <%end%>
   
-  <a href="/books/:id">Show</a>|<a href="/books">Back</a>
+  <%=link_to "Show", book_path(@book.id)%>|<%=link_to "Back",books_path %>

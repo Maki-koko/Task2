@@ -19,6 +19,14 @@
   <tr>
 </table>
 
+  <% if @book.errors.any? %>
+    <p>Please check the error details.</p>
+    <ul>
+      <% @book.errors.full_messages.each do |error| %>
+      <li><%= error %></li>
+      <%end%>
+    </ul>
+  <%end%>
 
 <div class="New-post">
   <h2>New book</h2>

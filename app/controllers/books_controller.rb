@@ -1,13 +1,16 @@
 class BooksController < ApplicationController
-
+  
   def create
     @book = Book.new(book_params)
     #データをフィルターにかける為、book_params必要
     if @book.save
+      flash[:notice] = "Your post has been successfully registered."
       redirect_to book_path(@book.id)
       # book_path=URLのPrefix、@book.id=id番号をbook_pathのURL(:id)に代入できるようにする？
-    else
-      render :new
+      else
+         @books = Book.all
+
+         render :index
     end
   end
 
@@ -26,16 +29,22 @@ class BooksController < ApplicationController
   end
   
   def update
-    book = Book.find(params[:id])
-    book.update(book_params)
+    @book = Book.find(params[:id])
+    
+    if @book.update(book_params)
     #更新データもフィルターかける為、book_params必要
-    redirect_to books_path(book.id)  
+      flash[:notice] = "Your post has been successfully registered."
+      redirect_to book_path(@book.id) 
+      else
+         render :edit
+    end
+     
   end
   
   def destroy
     book = Book.find(params[:id])
-    Book.destroy
-    redirect_to'/books'
+    book.destroy
+    redirect_to '/books'
   end
   
   private
